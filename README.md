@@ -12,14 +12,13 @@ The program uses two processes:
 - Consumer: removes items from the buffer. 
     The table can hold two items at a time. If the table is full, the producer waits. If the table is empty, the consumer waits. 
 
-What was Used: 
-    Language: C 
-    Environment: Linux/WSL Ubuntu 
-    Libraries: 
-        <pthread.h> for threading
-        <semaphore.h> for synchronization
-        <sys/mman.h> for shared memory 
-        <fcntl.h>, <unistd.h> for file descriptors 
+- **Language:** C  
+- **Environment:** Linux / WSL Ubuntu  
+- **Libraries:**  
+  - `<pthread.h>` — for threading  
+  - `<semaphore.h>` — for synchronization  
+  - `<sys/mman.h>` — for shared memory  
+  - `<fcntl.h>`, `<unistd.h>` — for file descriptors
 
 How it works: 
     Shared Memory: stores a struct with a 2-slot buffer, and indices in and out. 
