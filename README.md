@@ -27,11 +27,11 @@ How it works:
     Threads: each process runs one thread continuously to produce or consume.
     Circular Buffer: indices wrap using "(index+1) % N" to cycle between slot 0 and 1.
 
-What's happening in 'producer.c': 
-    Producer is responsible for generating integer items and placing them into a shared memory buffer that can hold two items at a time. Right when the program starts, it first creates or opens a shared memory object, sets its size with ftruncate, and maps it onto the process's address spaces with mmap. This shared region contains a structure that defines a circular buffer of size two. The producer opens 3 named semaphores to ensure mutual exclusion when accessing the shared buffer. Inside the main, the producer waits for an empty slot, then locks the critical section. It writes a new item into the buffer, advances the index using modulo arithmetic, prints the result, and then releases the lock and signals the consumer. When the user presses Ctrl + C, a signal handler sets a flag to stop the loop, and the cleanup function automatically unmaps the shared memory and closes all semaphores. 
+What's happening in `producer.c`: 
+    Producer.c is responsible for generating integer items and placing them into a shared memory buffer that can hold two items at a time. Right when the program starts, it first creates or opens a shared memory object, sets its size with ftruncate, and maps it onto the process's address spaces with mmap. This shared region contains a structure that defines a circular buffer of size two. The producer opens three named semaphores to ensure mutual exclusion when accessing the shared buffer. Inside main, the producer waits for an empty slot, then locks the critical section. It writes a new item into the buffer, advances the index using modulo arithmetic, prints the result, and then releases the lock and signals the consumer. When the user presses Ctrl + C, a signal handler sets a flag to stop the loop, and the cleanup function automatically unmaps the shared memory and closes all semaphores. 
 
-What's happening in consumer.c: 
-    Consumer blocks when the buffer is empty, enters the critical section to read 1 item, updates out, unlocks, and signals a new empty slot. Shared memory and named semaphores mean the producer and consumer (separate processes) coordinate safely. Signal/cleanup make it exit gracefully and leave no leaked handles.
+What's happening in `consumer.c`: 
+    Consumer.c blocks when the buffer is empty, enters the critical section to read one item, updates out, unlocks, and signals a new empty slot. Shared memory and named semaphores mean the producer and consumer (separate processes) coordinate safely. Signal/cleanup make it exit gracefully and leave no leaked handles.
 
 Project Structure: 
 os/
@@ -41,6 +41,7 @@ os/
     output.png       # Example of the output 
 
 Build Instructions (inside project folder): 
+```bash
     compile: 
         gcc producer.c -pthread -lrt -o producer 
         gcc consumer.c -pthread -lrt -o consumer
@@ -49,7 +50,7 @@ Build Instructions (inside project folder):
     stop programs: 
         pkill producer
         pkill consumer
-
+```
 Example Output:
-    Below is the attachment showing the producer and consumer programs running successfully:
+    Below is a screenshot showing the producer and consumer programs running successfully:
     ![Program Output](output.png)
