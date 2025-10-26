@@ -19,7 +19,7 @@ What was Used:
         `<pthread.h>` for threading 
         `<semaphore.h>` for synchronization 
         `<sys/mman.h>` for shared memory 
-        `<fcntl.h>`, <unistd.h> for file descriptors
+        `<fcntl.h>`, `<unistd.h>` for file descriptors
 
 How it works: 
     Shared Memory: stores a struct with a 2-slot buffer, and indices in and out. 
