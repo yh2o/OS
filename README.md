@@ -27,7 +27,7 @@ How it works:
     Threads: each process runs one thread continuously to produce or consume.
     Circular Buffer: indices wrap using "(index+1) % N" to cycle between slot 0 and 1.
 
-What's happening in producer.c: 
+What's happening in 'producer.c': 
     Producer is responsible for generating integer items and placing them into a shared memory buffer that can hold two items at a time. Right when the program starts, it first creates or opens a shared memory object, sets its size with ftruncate, and maps it onto the process's address spaces with mmap. This shared region contains a structure that defines a circular buffer of size two. The producer opens 3 named semaphores to ensure mutual exclusion when accessing the shared buffer. Inside the main, the producer waits for an empty slot, then locks the critical section. It writes a new item into the buffer, advances the index using modulo arithmetic, prints the result, and then releases the lock and signals the consumer. When the user presses Ctrl + C, a signal handler sets a flag to stop the loop, and the cleanup function automatically unmaps the shared memory and closes all semaphores. 
 
 What's happening in consumer.c: 
