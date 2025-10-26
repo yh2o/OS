@@ -50,6 +50,6 @@ Build Instructions (inside project folder):
         pkill producer
         pkill consumer
 
-Example Output (Screenshot):
+Example Output:
     Below is the attachment showing the producer and consumer programs running successfully:
     ![Program Output](output.png)
