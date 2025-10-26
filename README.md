@@ -38,9 +38,9 @@ os/
     producer.c       # Producer program (creates items and adds to shared buffer)
     consumer.c       # Consumer program (removes items from shared buffer)
     README.md        # Project documentation, instructions, and example output
-    output.png       ![Alt text](output.png)
+    output.png  <!-- ![Alt text](output.png) -->
 
-Build Instructions (inside project folder run): 
+Build Instructions (inside project folder): 
     compile: 
         gcc producer.c -pthread -lrt -o producer 
         gcc consumer.c -pthread -lrt -o consumer
